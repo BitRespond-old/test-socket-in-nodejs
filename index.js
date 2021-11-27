@@ -7,14 +7,36 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 const client = new Client({
+  session: {},
   puppeteer: {
-    headless: false,
-    browserWSEndpoint: `ws://127.0.0.1:49427/devtools/browser/93f31356-5a14-454b-8dc4-48f21726f864`,
+    browserWSEndpoint: `ws://127.0.0.1:49514/devtools/browser/07426823-2ef1-45cf-982d-7f79041a0225`,
   },
 });
 client.initialize();
 
-console.log("changes 4");
+client.on("qr", (qr) => {
+  console.log("QR", qr);
+});
+
+client.on("auth_failure", (m) => {
+  console.log("auth_failure", m);
+});
+
+client.on("authenticated", (session) => {
+  console.log("authenticated", session);
+});
+
+client.on("ready", () => {
+  console.log("Client is ready!");
+  main();
+});
+
+console.log("changes 9");
+
+const main = async () => {
+  const chats = await client.getChats();
+  console.log(chats.length);
+};
 
 // app.get("/", (req, res) => {
 //   res.sendFile(__dirname + "/index.html");
