@@ -4,8 +4,15 @@
   "description": "Test socket in nodejs",
   "main": "index.js",
   "scripts": {
+    "prestart": "node browser.js &",
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "browser": "node browser.js",
+    "start-browser": "node -e \"require('puppeteer').launch().then(pup => console.log(pup.wsEndpoint()))\"",
+    "shell-script": "node",
+    "shell": "node -e 'console.log(123); console.log(456)'",
+    "dev2": "npm run browser && nodemon autoprocess.js",
+    "dev-autoprocess": "export devMode=$(npm run browser | tail -1) && nodemon autoprocess.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
